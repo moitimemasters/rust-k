@@ -120,5 +120,8 @@ pub fn parse_program(string: String) -> Vec<Token> {
             }
         }
     });
+    if !do_while_end_stack.is_empty() {
+        unreachable!("Some code blocks aren't closed");
+    }
     program
 }
