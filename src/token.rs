@@ -9,6 +9,7 @@ pub struct Token {
     pub keyword_type: Option<KeyWordType>,
     pub comparative_type: Option<ComparativeType>,
     pub references: Option<i64>,
+    pub otherwise: Option<i64>,
     pub id: Option<i64>,
 }
 
@@ -22,6 +23,7 @@ impl Token {
         defered: bool,
         id: Option<i64>,
         references: Option<i64>,
+        otherwise: Option<i64>,
     ) -> Token {
         Token {
             token_type,
@@ -32,6 +34,7 @@ impl Token {
             defered,
             references,
             id,
+            otherwise
         }
     }
 
@@ -41,6 +44,10 @@ impl Token {
 
     pub fn change_reference(&mut self, references: Option<i64>) {
         self.references = references;
+    }
+
+    pub fn change_otherwise(&mut self, otherwise: Option<i64>) {
+        self.otherwise = otherwise;
     }
 
     pub fn get_keyword_type(self) -> Option<KeyWordType> {
@@ -69,6 +76,7 @@ impl Token {
             false,
             None,
             None,
+            None,
         )
     }
     fn cmp_no_args_operation(cmp_type: ComparativeType) -> Token {
@@ -79,6 +87,7 @@ impl Token {
             Some(cmp_type),     
             None,
             false,
+            None,
             None,
             None,
         )
@@ -97,6 +106,7 @@ impl Token {
             false,
             None,
             None,
+            None,
         )
     }
 }
@@ -113,6 +123,7 @@ impl Token {
             false,
             Some(id),
             Some(id),
+            None,
         )
     }
 
@@ -126,6 +137,7 @@ impl Token {
             false,
             Some(references),
             Some(id),
+            None,
         )
     }
 
@@ -139,8 +151,23 @@ impl Token {
             false,
             Some(references),
             Some(id),
+            Some(references),
         )
     }
+    pub fn kw_else(id: i64, references: i64) -> Token {
+        Token::new(
+            TokenType::KeyWord,
+            None,
+            Some(KeyWordType::Else),
+            None,
+            None,
+            false,
+            Some(references),
+            Some(id),
+            None,
+        )
+    }
+    
 }
 
 
@@ -176,6 +203,10 @@ impl Token {
 
     pub fn op_shl() -> Token {
         Token::op_no_args_operation(OpertaionType::Shl)
+    }
+
+    pub fn op_space() -> Token {
+        Token::op_no_args_operation(OpertaionType::PutSpace)
     }
 
     pub fn op_band() -> Token {
@@ -250,5 +281,7 @@ impl Token {
     pub fn cmp_not() -> Token {
         Token::cmp_no_args_operation(ComparativeType::Not)
     }
+
+
 
 }

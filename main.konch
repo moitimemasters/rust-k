@@ -1,12 +1,4 @@
-1 2 3 3 while dup 0 > do
-  swap
-  3 while dup 0 >= do
-    dup2 >> 1 &
-    put
-    1 -
-  end
-  blank
-  pop
-  pop
-  1 -
+0 do
+  2 dump
 end
+777 dump

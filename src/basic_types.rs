@@ -26,6 +26,7 @@ pub enum OpertaionType {
     Xor,
     Pop,
     Put,
+    PutSpace,
 }
 
 #[derive(Clone, Copy)]
@@ -46,4 +47,5 @@ pub enum KeyWordType {
     Do,
     While,
     End,
+    Else,
 }

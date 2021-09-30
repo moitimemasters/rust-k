@@ -1,4 +1,4 @@
-use std::{collections::HashMap, env, fs, str::FromStr};
+use std::{collections::HashMap, env, fs};
 
 
 use basic_types::KeyWordType;
@@ -29,7 +29,7 @@ pub fn simulate_program(program: &Vec<Token>) {
     while i < program.len() {
         let token = program[i];
         match token {
-            Token { token_type: TokenType::Opertaion, value, defered: _, operation_type, keyword_type: _, comparative_type: _, references: _, id: _ } => {
+            Token { token_type: TokenType::Opertaion, value, defered: _, operation_type, keyword_type: _, comparative_type: _, references: _, id: _, otherwise: _ } => {
                 match operation_type {
                     Some(OpertaionType::Push) => {
                         if let Some(x) = value {
@@ -131,10 +131,13 @@ pub fn simulate_program(program: &Vec<Token>) {
                         let a = stack.pop().unwrap();
                         print!("{}", a)
                     }
+                    Some(OpertaionType::PutSpace) => {
+                        print!(" ");
+                    }
                     None => { unreachable!() }
                 }
             },
-            Token { token_type: TokenType::KeyWord, value, defered, operation_type, keyword_type, comparative_type, references, id} => {
+            Token { token_type: TokenType::KeyWord, value: _, defered: _, operation_type: _, keyword_type, comparative_type: _, references, id: _, otherwise} => {
                 match keyword_type {
                     Some(KeyWordType::While) => {
 
@@ -142,17 +145,25 @@ pub fn simulate_program(program: &Vec<Token>) {
                     Some(KeyWordType::Do) => {
                         let a = stack.pop().unwrap();
                         if a == 0 {
-                            let goto = references.unwrap();
+                            // println!("otherwise");
+                            let goto = otherwise.unwrap();
+                            // println!("goto {}", goto);
                             i = id_index_table[&goto];
+                        } else {
+                            let goto = references.unwrap();
+                            i = id_index_table[&goto]; 
                         }
                     }
                     Some(KeyWordType::End) => {
                         i = id_index_table[&references.unwrap()];
                     }
+                    Some(KeyWordType::Else) => {
+                        i = id_index_table[&references.unwrap()];
+                    }
                     None => { unreachable!() }
                 }
             },
-            Token { token_type: TokenType::Comparative, value, defered, operation_type, keyword_type, comparative_type, references, id } => {
+            Token { token_type: TokenType::Comparative, value: _, defered: _, operation_type: _, keyword_type: _, comparative_type, references: _, id: _, otherwise: _ } => {
                 match comparative_type {
                     Some(basic_types::ComparativeType::Less) => {
                         let a = stack.pop().unwrap();

@@ -44,6 +44,7 @@ pub fn get_available_keyword(a: &str, id: i64) -> Result<Token, &'static str> {
         "while" => Ok(Token::kw_while(id)),
         "do" => Ok(Token::kw_do(id, id)),
         "end" => Ok(Token::kw_end(id, id)),
+        "else" => Ok(Token::kw_else(id, id)),
         _ => Err("Unimplemented"),
     }
 }
@@ -67,21 +68,31 @@ pub fn parse_program(string: String) -> Vec<Token> {
                 get_available_keyword(token, current_keyword_id + 1)
             {
                 current_keyword_id += 1;
-                if token == "while" {
-                    do_while_end_stack.push((result_token, index));
-                } else if token == "do" {
-                    // println!("do index is {}", index);
+                if token == "while" || token== "do" || token == "else" {
                     do_while_end_stack.push((result_token, index));
                 } else if token == "end" {
                     if let Some((top_token, index)) = do_while_end_stack.pop() {
                         // println!("index is: {}", index);
                         match top_token.get_keyword_type() {
                             Some(KeyWordType::Do) => {
-                                program[index].change_reference(Some(current_keyword_id));
+                                program[index].change_otherwise(Some(current_keyword_id));
                             }
-                            // Some(KeyWordType::While) => {
-                            //     // println!("while");
-                            // }
+                            
+                            Some(KeyWordType::Else) => {
+                                program[index].change_reference(Some(current_keyword_id));
+                                if let Some((tt, i)) = do_while_end_stack.pop() {
+                                    match tt.get_keyword_type() {
+                                        Some(KeyWordType::Do) => {
+                                            // result_token.change_reference(program[i].get_id());
+                                            let id_ = program[index].get_id();
+                                            program[i].change_otherwise(id_);
+                                        }
+                                        _ => {
+                                            unreachable!();
+                                        }
+                                    }
+                                }
+                            }
                             // Some(KeyWordType::End) => {
                             //     // println!("end");
                             // }
@@ -105,7 +116,7 @@ pub fn parse_program(string: String) -> Vec<Token> {
                 }
                 program.push(result_token);
             } else {
-                unreachable!();
+                unreachable!(token);
             }
         }
     });
