@@ -24,5 +24,5 @@ while <expr> do
 end
 ```
 
-"expr" will be executed every time before the "body", after "expr" execution stack top will be popped
+"expr" will be executed each time before the "body", after "expr" execution stack top will be popped
 and checked if it is zero or not.
