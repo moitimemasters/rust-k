@@ -14,7 +14,7 @@ for example:
 ```
 +
 ```
-will take pop from the stack twice, add those numbers, push their sum to the stack
+will pop from the stack twice, add those numbers, push their sum to the stack
 
 K has while loops
 
