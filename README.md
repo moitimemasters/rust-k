@@ -9,6 +9,7 @@ to push a value on a stack (for now just numbers):
 this will push 1, 2, 3 to a stack, meaning curretn top is 3
 
 to operate on stack top, you can just use whatever operator you want that is currently present in a language
+
 for example:
 ```
 +
