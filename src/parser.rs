@@ -21,6 +21,7 @@ pub fn get_available_operation(a: &str) -> Result<Token, &'static str> {
         "swap2" => Ok(Token::op_swap2()),
         "pop" => Ok(Token::op_pop()),
         "put" => Ok(Token::op_put()),
+        "putunicode" => Ok(Token::op_put_unicode()),
         _ => Err("Unimplemented"),
     }
 }

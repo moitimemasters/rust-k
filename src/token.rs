@@ -94,7 +94,6 @@ impl Token {
     }
 }
 
-// opertaions with args
 impl Token {
     pub fn op_push(x: i64) -> Token {
         Token::new(
@@ -170,8 +169,7 @@ impl Token {
     
 }
 
-
-// no args operations
+// strangly enough, these are NO ARGS operations
 impl Token {
     pub fn op_dump() -> Token {
         Token::op_no_args_operation(OpertaionType::Dump)
@@ -248,6 +246,10 @@ impl Token {
 
     pub fn op_swap2() -> Token {
         Token::op_no_args_operation(OpertaionType::Swap2)
+    }
+
+    pub fn op_put_unicode() -> Token {
+        Token::op_no_args_operation(OpertaionType::PutUnicode)
     }
 
     pub fn cmp_less() -> Token {

@@ -1,4 +1,0 @@
-0 do
-  2 dump
-end
-777 dump

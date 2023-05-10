@@ -27,6 +27,7 @@ pub enum OpertaionType {
     Pop,
     Put,
     PutSpace,
+    PutUnicode,
 }
 
 #[derive(Clone, Copy)]

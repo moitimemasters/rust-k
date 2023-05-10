@@ -134,6 +134,15 @@ pub fn simulate_program(program: &Vec<Token>) {
                     Some(OpertaionType::PutSpace) => {
                         print!(" ");
                     }
+                    Some(OpertaionType::PutUnicode) => {
+                        let a = stack.pop().unwrap() as u32;
+                        print!("{}",
+                            match std::char::from_u32(a) {
+                                Some(c) => c,
+                                None => '?'
+                            }    
+                        );
+                    }
                     None => { unreachable!() }
                 }
             },
