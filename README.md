@@ -26,3 +26,14 @@ end
 
 "expr" will be executed each time before the "body", after "expr" execution stack top will be popped
 and checked if it is zero or not.
+
+
+Similarly, you can have if statements.
+
+```
+<condition> do
+
+else (optional)
+
+end
+```
