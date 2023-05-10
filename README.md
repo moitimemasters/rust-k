@@ -37,3 +37,9 @@ else (optional)
 
 end
 ```
+
+
+To run your script simply provide file path as a command-line positional argument to a compiled binary such as:
+```bash
+cargo run fizz_buzz.k
+```
